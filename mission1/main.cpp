@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include "GradeFactory.cpp"
 
 using namespace std;
 
@@ -105,18 +106,7 @@ int getPlayerGrade(int playerID)
 	}
 	return playerGrade;
 }
-bool needToBeRmoved(int playerID)
-{
-	bool isPlayerGradeNormal = playerGrade[playerID] == NORMAL ? true : false;
-	bool isPlayerAttendedWednesday = playerWeekAttendData[playerID][WEDNESDAY] == 0 ? true : false;
-	bool isPlayerAttendedWeekend = (playerWeekAttendData[playerID][SATURDAY] == 0 && playerWeekAttendData[playerID][SUNDAY] == 0) ? true : false;
 
-	if (isPlayerGradeNormal && isPlayerAttendedWednesday && isPlayerAttendedWeekend)
-	{
-		return true;
-	}
-	return false;
-}
 
 int getAddPointForPlayer(string week)
 {
@@ -151,7 +141,6 @@ int getBonusPoint(int playerID)
 void printPlayerInfo(int playerID)
 {
 	cout << "NAME : " << playerNames[playerID] << ", ";
-	cout << "WEEK : " << playerWeekAttendData[playerID][WEDNESDAY] << ", ";
 	cout << "POINT : " << playerPoints[playerID] << ", ";
 	cout << "GRADE : ";
 
