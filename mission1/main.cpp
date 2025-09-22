@@ -124,7 +124,18 @@ int getAddPointForPlayer(string week)
 
 	return addPoint;
 }
+bool needToBeRmoved(int playerID)
+{
+	bool isPlayerGradeNormal = getPlayerGrade(playerID) == NORMAL ? true : false;
+	bool isPlayerAttendedWednesday = playerWeekAttendData[playerID][WEDNESDAY] == 0 ? true : false;
+	bool isPlayerAttendedWeekend = (playerWeekAttendData[playerID][SATURDAY] == 0 && playerWeekAttendData[playerID][SUNDAY] == 0) ? true : false;
 
+	if (isPlayerGradeNormal && isPlayerAttendedWednesday && isPlayerAttendedWeekend)
+	{
+		return true;
+	}
+	return false;
+}
 int getBonusPoint(int playerID)
 {
 	int bonusPoint = 0;
