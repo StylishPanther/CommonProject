@@ -50,15 +50,9 @@ typedef enum week
 	WEEK_MAX = 7
 } e_week;
 
-struct Node {
-	string PlayerName;
-	string week;
-};
-
 map<string, int> playerIDMap;
 int idCnt = 0;
 
-//playerWeekAttendData[사용자ID][요일]
 int playerWeekAttendData[MAX_PLAYER_NUM][WEEK_MAX];
 int playerPoints[MAX_PLAYER_NUM];
 int playerGrade[MAX_PLAYER_NUM];
@@ -67,7 +61,7 @@ string playerNames[MAX_PLAYER_NUM];
 /* 요일 문자열에서 요일 인덱스 획득 */
 int getWeekIndex(string week)
 {
-	if (week == "monday") 
+	if (week == "monday")
 	{
 		return MONDAY;
 	}
@@ -116,7 +110,7 @@ bool needToBeRmoved(int playerID)
 	bool isPlayerGradeNormal = playerGrade[playerID] == NORMAL ? true : false;
 	bool isPlayerAttendedWednesday = playerWeekAttendData[playerID][WEDNESDAY] == 0 ? true : false;
 	bool isPlayerAttendedWeekend = (playerWeekAttendData[playerID][SATURDAY] == 0 && playerWeekAttendData[playerID][SUNDAY] == 0) ? true : false;
-	
+
 	if (isPlayerGradeNormal && isPlayerAttendedWednesday && isPlayerAttendedWeekend)
 	{
 		return true;
@@ -172,7 +166,7 @@ void printPlayerInfo(int playerID)
 	}
 }
 
-void printPlayerInfoNeedToBeRemoved (void)
+void printPlayerInfoNeedToBeRemoved(void)
 {
 	std::cout << "\n";
 	std::cout << "Removed player\n";
@@ -186,7 +180,7 @@ void printPlayerInfoNeedToBeRemoved (void)
 }
 void givePlayerIDToPlayer(string playerName, string week) {
 	//ID 부여
-	if (playerIDMap.count(playerName) == 0) 
+	if (playerIDMap.count(playerName) == 0)
 	{
 		playerIDMap.insert({ playerName, ++idCnt });
 		playerNames[idCnt] = playerName;
@@ -200,11 +194,11 @@ void givePlayerIDToPlayer(string playerName, string week) {
 
 void inputPlayerInfo() {
 	ifstream fin{ "attendance_weekday_500.txt" }; //500개 데이터 입력
-	
+
 	for (int dataIdx = 0; dataIdx < MAX_DATA_NUM; dataIdx++) {
-		string t1, t2;
-		fin >> t1 >> t2;
-		givePlayerIDToPlayer(t1, t2);
+		string playerName, attendedWeek;
+		fin >> playerName >> attendedWeek;
+		givePlayerIDToPlayer(playerName, attendedWeek);
 	}
 
 	for (int playerID = 1; playerID <= idCnt; playerID++) {
